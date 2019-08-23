@@ -1,20 +1,25 @@
 package mock.psc;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CarTest {
 
+    private static final Logger LOGGER = Logger.getLogger(CarTest.class);
+
 
     private Car car;
-    @Spy
+    @Mock
     private Engine engine;
+
+    @InjectMocks
+    private Car carWithInjectMocks;
 
     @Before
     public void SetUp() {
@@ -23,6 +28,8 @@ public class CarTest {
 
     @Test
     public void shouldStartEngineWhenStartingCar() {
+        LOGGER.info("BEGIN - shouldStartEngineWhenStartingCar");
+        LOGGER.error("ERROR - shouldStartEngineWhenStartingCar");
         car.start();
         Mockito.verify(engine).start();
 
@@ -55,5 +62,11 @@ public class CarTest {
         car.turnLeft();
         Mockito.verify(car).turnLeft();
         Mockito.verify(car).drive("LEFT");
+    }
+
+    @Test
+    public void shouldStartEngineBeforeDoSomething() {
+        carWithInjectMocks.doSomethingWithAdditionaEngine();
+        Mockito.verify(carWithInjectMocks.getAdditionalEngine()).start();
     }
 }

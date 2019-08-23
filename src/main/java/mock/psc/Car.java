@@ -4,6 +4,21 @@ public class Car {
 
     private Engine engine;
     private String serialNumber;
+    private Engine additionalEngine;
+
+    public Engine getAdditionalEngine() {
+        return additionalEngine;
+    }
+
+    public Car(Engine engine, String serialNumber, Engine additionalEngine) {
+        this.engine = engine;
+        this.serialNumber = serialNumber;
+        this.additionalEngine = additionalEngine;
+    }
+
+    public void setAdditionalEngine(Engine additionalEngine) {
+        this.additionalEngine = additionalEngine;
+    }
 
     public Car(Engine engine, String serialNumber) {
         this.engine = engine;
@@ -19,6 +34,10 @@ public class Car {
             start();
 
         engine.stop();
+    }
+    public  void  doSomethingWithAdditionaEngine(){
+        additionalEngine.start();
+        System.out.println("Do something");
     }
 
     public void turnLeft() {
